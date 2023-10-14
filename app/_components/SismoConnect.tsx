@@ -51,7 +51,8 @@ export default function SismoConnect({
         },
       ]}
       onResponse={async (response: SismoConnectResponse) => {
-        const res = await fetch("/api/verify", {
+        const url = "/api/verify";
+        const res = await fetch(url, {
           method: "POST",
           body: JSON.stringify(response),
         });
