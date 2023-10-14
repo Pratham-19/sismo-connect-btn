@@ -22,6 +22,7 @@ export const Profile = () => {
           >
             Disconnect
           </button>
+          <SismoConnect setTwitterId={setTwitterId} isFake={true} />
           <SismoConnect setTwitterId={setTwitterId} />
         </div>
       </div>
