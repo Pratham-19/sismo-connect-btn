@@ -10,9 +10,11 @@ import { Dispatch, SetStateAction } from "react";
 
 export default function SismoConnect({
   setTwitterId,
+  setAddr,
   isFake,
 }: {
   setTwitterId: Dispatch<SetStateAction<string | null>>;
+  setAddr: Dispatch<SetStateAction<string | null>>;
   isFake?: boolean;
 }) {
   let config: SismoConnectConfig = {
@@ -49,6 +51,7 @@ export default function SismoConnect({
         {
           authType: AuthType.TWITTER,
         },
+        { authType: AuthType.EVM_ACCOUNT },
       ]}
       onResponse={async (response: SismoConnectResponse) => {
         const url = "/api/verify";
@@ -56,8 +59,8 @@ export default function SismoConnect({
           method: "POST",
           body: JSON.stringify(response),
         });
-        const twitterId = await res.json();
-
+        const { twitterId, evmAccount } = await res.json();
+        setAddr(evmAccount);
         setTwitterId(twitterId);
       }}
     />

@@ -14,7 +14,6 @@ const sismoConnect = SismoConnect({
   },
 });
 
-// this is the API route that is called by the SismoConnectButton
 export async function POST(req: Request) {
   const sismoConnectResponse = await req.json();
 
@@ -22,12 +21,22 @@ export async function POST(req: Request) {
     const result: SismoConnectVerifiedResult = await sismoConnect.verify(
       sismoConnectResponse,
       {
-        auths: [{ authType: AuthType.TWITTER }],
+        auths: [
+          { authType: AuthType.TWITTER },
+          { authType: AuthType.EVM_ACCOUNT },
+        ],
       }
     );
     const twitterId = result.getUserId(AuthType.TWITTER);
-    console.log("twitterId", twitterId, result);
-    return NextResponse.json(twitterId, { status: 200 });
+    const evmAccount = result.getUserId(AuthType.EVM_ACCOUNT);
+
+    return NextResponse.json(
+      {
+        twitterId,
+        evmAccount,
+      },
+      { status: 200 }
+    );
   } catch (e: any) {
     console.error(e);
     return NextResponse.json(e.message, { status: 500 });
