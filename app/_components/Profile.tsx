@@ -8,7 +8,6 @@ export const Profile = () => {
   const { address, isConnected } = useAccount();
   const { disconnect } = useDisconnect();
   const [twitterId, setTwitterId] = useState<string | null>(null);
-  const [addr, setAddr] = useState<string | null>(null);
 
   if (isConnected) {
     return (
@@ -16,7 +15,6 @@ export const Profile = () => {
         <h1 className="mb-3">Welcome</h1>
         <p>Address: {address}</p>
         {twitterId && <p>Twitter Id: {twitterId}</p>}
-        {addr && <p>Sismo proof address: {addr}</p>}
         <div className="flex justify-center items-center gap-3 mt-5">
           <button
             className="rounded-xl bg-white p-4 text-black"
@@ -24,8 +22,7 @@ export const Profile = () => {
           >
             Disconnect
           </button>
-          {/* <SismoConnect setTwitterId={setTwitterId} isFake={true} /> */}
-          <SismoConnect setTwitterId={setTwitterId} setAddr={setAddr} />
+          <SismoConnect setTwitterId={setTwitterId} />
         </div>
       </div>
     );

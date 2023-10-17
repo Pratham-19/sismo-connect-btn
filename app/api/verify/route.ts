@@ -1,6 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-// in src/app/api/verify/route.ts
-
 import {
   AuthType,
   SismoConnect,
@@ -16,24 +13,19 @@ const sismoConnect = SismoConnect({
 
 export async function POST(req: Request) {
   const sismoConnectResponse = await req.json();
-
+  console.log(sismoConnectResponse);
   try {
     const result: SismoConnectVerifiedResult = await sismoConnect.verify(
       sismoConnectResponse,
       {
-        auths: [
-          { authType: AuthType.TWITTER },
-          { authType: AuthType.EVM_ACCOUNT },
-        ],
+        auths: [{ authType: AuthType.TWITTER }],
       }
     );
     const twitterId = result.getUserId(AuthType.TWITTER);
-    const evmAccount = result.getUserId(AuthType.EVM_ACCOUNT);
 
     return NextResponse.json(
       {
         twitterId,
-        evmAccount,
       },
       { status: 200 }
     );
